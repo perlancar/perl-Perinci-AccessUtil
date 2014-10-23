@@ -1,4 +1,4 @@
-package Perinci::AccessUtil::Check;
+package Perinci::AccessUtil;
 
 # DATE
 # VERSION
@@ -47,7 +47,7 @@ sub strip_riap_stuffs_from_res {
 
 =head1 SYNOPSIS
 
- use Perinci::AccessUtil::Check qw(strip_riap_stuffs_from_res);
+ use Perinci::AccessUtil qw(strip_riap_stuffs_from_res);
  my $res = strip_riap_stuffs_from_res([200,"OK"]);
 
 
