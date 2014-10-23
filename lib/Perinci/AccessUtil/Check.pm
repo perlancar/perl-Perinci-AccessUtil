@@ -9,9 +9,9 @@ use warnings;
 
 require Exporter;
 our @ISA = qw(Exporter);
-our @EXPORT_OK = qw(check_riap_res);
+our @EXPORT_OK = qw(strip_riap_stuffs_from_res);
 
-sub check_riap_res {
+sub strip_riap_stuffs_from_res {
     my $res = shift;
 
     my $ver = $res->[3]{'riap.v'} // 1.1;
@@ -47,8 +47,8 @@ sub check_riap_res {
 
 =head1 SYNOPSIS
 
- use Perinci::AccessUtil::Check qw(check_riap_res);
- my $res = check_riap_res([200,"OK"]);
+ use Perinci::AccessUtil::Check qw(strip_riap_stuffs_from_res);
+ my $res = strip_riap_stuffs_from_res([200,"OK"]);
 
 
 =head1 DESCRIPTION
@@ -56,11 +56,12 @@ sub check_riap_res {
 
 =head1 FUNCTIONS
 
-=head2 check_riap_res($envres) => array
+=head2 strip_riap_stuffs_from_res($envres) => array
 
 Starting in Riap protocol v1.2, client is required to check and strip all
 C<riap.*> keys in result metadata (C<< $envres->[3] >>). This routine does just
-that.
+that. In addition, this routine also decode result if C<riap.result_encoding> is
+set, so the user already gets the decoded content.
 
 This routine is used by Riap client libraries, e.g. L<Perinci::Access::Lite>,
 L<Perinci::Access::Perl>, and L<Perinci::Access::HTTP::Client>,
