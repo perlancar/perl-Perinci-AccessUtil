@@ -9,7 +9,29 @@ use warnings;
 
 require Exporter;
 our @ISA = qw(Exporter);
-our @EXPORT_OK = qw(strip_riap_stuffs_from_res);
+our @EXPORT_OK = qw(insert_riap_stuffs_to_res strip_riap_stuffs_from_res);
+
+sub insert_riap_stuffs_to_res {
+    my ($res, $def_ver, $nmeta) = @_;
+
+    $res->[3]{'riap.v'} //= $def_ver // 1.1;
+    if ($res->[3]{'riap.v'} >= 1.2) {
+        # do we need to base64-encode?
+        {
+            last if $res->[3]{'riap.result_encoding'};
+            if ($nmeta) {
+                last unless $nmeta->{result}{schema} &&
+                    $nmeta->{result}{schema}[0] eq 'buf';
+            }
+            last unless defined($res->[2]) && !ref($res->[2]) &&
+                $res->[2] =~ /[^\x20-\x7f]/;
+            require MIME::Base64;
+            $res->[2] = MIME::Base64::encode_base64($res->[2]);
+            $res->[3]{'riap.result_encoding'} = 'base64';
+        }
+    }
+    $res;
+}
 
 sub strip_riap_stuffs_from_res {
     my $res = shift;
@@ -55,6 +77,15 @@ sub strip_riap_stuffs_from_res {
 
 
 =head1 FUNCTIONS
+
+=head2 insert_riap_stuffs_to_res($envres[, $def_ver, $nmeta]) => array
+
+Starting in Riap protocol v1.2, server is required to return C<riap.v> in result
+metadata. This routine does just that. In addition to that, this routine also
+encodes result with base64 when necessary.
+
+This routine is used by Riap network server libraries, e.g.
+L<Perinci::Access::HTTP::Server> and L<Perinci::Access::Simple::Server>.
 
 =head2 strip_riap_stuffs_from_res($envres) => array
 
