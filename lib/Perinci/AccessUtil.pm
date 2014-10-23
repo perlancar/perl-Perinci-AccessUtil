@@ -136,6 +136,9 @@ Either way, you can use the response returned by this function to user.
 Replace C<ARGNAME:base64> keys in C<arg> in Riap request C<$req> with their
 decoded values. Only done when C<v> key is at least 1.2.
 
+This routine is used in Riap server libraries like in
+L<Perinci::Access::HTTP::Server> and Perinci::Access::Simple::Server::*.
+
 
 =head1 SEE ALSO
 
