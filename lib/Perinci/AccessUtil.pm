@@ -16,12 +16,13 @@ our @EXPORT_OK = qw(insert_riap_stuffs_to_res
                     decode_args_in_riap_req);
 
 sub insert_riap_stuffs_to_res {
-    my ($res, $def_ver, $nmeta) = @_;
+    my ($res, $def_ver, $nmeta, $encode) = @_;
 
     $res->[3]{'riap.v'} //= $def_ver // 1.1;
     if ($res->[3]{'riap.v'} >= 1.2) {
         # do we need to base64-encode?
         {
+            last unless $encode // 1;
             last if $res->[3]{'riap.result_encoding'};
             if ($nmeta) {
                 last unless $nmeta->{result}{schema} &&
@@ -107,7 +108,7 @@ sub decode_args_in_riap_req {
 
 =head1 FUNCTIONS
 
-=head2 insert_riap_stuffs_to_res($envres[, $def_ver, $nmeta]) => array
+=head2 insert_riap_stuffs_to_res($envres[, $def_ver, $nmeta, $decode]) => array
 
 Starting in Riap protocol v1.2, server is required to return C<riap.v> in result
 metadata. This routine does just that. In addition to that, this routine also
