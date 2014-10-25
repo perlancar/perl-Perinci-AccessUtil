@@ -30,7 +30,7 @@ sub insert_riap_stuffs_to_res {
             }
             last unless defined($res->[2]) && !ref($res->[2]) &&
                 $res->[2] =~ /[^\x20-\x7f]/;
-            $res->[2] = encode_base64($res->[2]);
+            $res->[2] = encode_base64($res->[2], "");
             $res->[3]{'riap.result_encoding'} = 'base64';
         }
     }
