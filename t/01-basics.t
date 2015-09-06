@@ -24,13 +24,13 @@ subtest "insert_riap_stuffs_to_res" => sub {
                   [200,"OK","\0\0\0",{"riap.v"=>1.1}],
                   "encoding is not active under version 1.1");
         is_deeply(insert_riap_stuffs_to_res([200,"OK","\0\0\0"], 1.2),
-                  [200,"OK","AAAA\n",{"riap.v"=>1.2, "riap.result_encoding"=>"base64"}],
+                  [200,"OK","AAAA",{"riap.v"=>1.2, "riap.result_encoding"=>"base64"}],
                   "encoding is automatically active under version 1.2");
         is_deeply(insert_riap_stuffs_to_res([200,"OK","\0\0\0"], 1.2, {v=>1.1, result=>{schema=>["str"]}}),
                   [200,"OK","\0\0\0",{"riap.v"=>1.2}],
                   "encoding is not active if result schema says type is not buf");
         is_deeply(insert_riap_stuffs_to_res([200,"OK","\0\0\0"], 1.2, {v=>1.1, result=>{schema=>["buf"]}}),
-                  [200,"OK","AAAA\n",{"riap.v"=>1.2, "riap.result_encoding"=>"base64"}],
+                  [200,"OK","AAAA",{"riap.v"=>1.2, "riap.result_encoding"=>"base64"}],
                   "encoding is active if result schema says type is buf");
         is_deeply(insert_riap_stuffs_to_res([200,"OK","\0\0\0",{"riap.result_encoding"=>"foo"}], 1.2),
                   [200,"OK","\0\0\0",{"riap.v"=>1.2, "riap.result_encoding"=>"foo"}],
