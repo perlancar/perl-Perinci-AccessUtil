@@ -1,4 +1,4 @@
-0.06    2015-09-06 (PERLANCAR)
+0.06    2015-09-06  Released-By: PERLANCAR
 
 	- No functional changes.
 
@@ -7,28 +7,28 @@
 	  requirement.
 
 
-0.05    2014-10-24 (PERLANCAR)
+0.05    2014-10-24  Released-By: PERLANCAR
 
 	- Add option to disable encoding of result.
 
 
-0.04    2014-10-23 (PERLANCAR)
+0.04    2014-10-23  Released-By: PERLANCAR
 
 	- Add function: decode_args_in_riap_req().
 
 
-0.03    2014-10-23 (PERLANCAR)
+0.03    2014-10-23  Released-By: PERLANCAR
 
 	- Add function: insert_riap_stuffs_to_res.
 
 
-0.02     2014-10-23 (PERLANCAR)
+0.02     2014-10-23  Released-By: PERLANCAR
 
          - Rename module from Perinci::AccessUtil::Check to Perinci::AccessUtil.
            Rename function from check_riap_res() to
            strip_riap_stuffs_from_res().
 
 
-0.01     2014-10-23 (PERLANCAR)
+0.01     2014-10-23  Released-By: PERLANCAR
 
          - First release.
